@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IMDB Search</title>
+  </head>
+  <body>
+    <form>
+      <h1>Search for a Movie</h1>
+      <input id="search" type="text" placeholder="Enter Movie Title"/>
+      <br />
+      <button id="submit">Search</button>
+      <br />
+      <div id="results"></div>
+    </form>
+    <script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('#submit').click(function(e){
+          e.preventDefault();
+
+          var s = $('#search').val();
+          var url = 'http://www.omdbapi.com/?t='+s;
+
+          if(s !== ""){
+            $.get(url).done(function(result){
+              console.log(result);
+              var img = result.Poster;
+              var title = result.Title;
+              var actors = result.Actors;
+              var rated = result.Rated;
+              var rating = result.imdbRating;
+
+              $('#results').append("<h2>"+title+ " (Rated: " +rated+")" +"</h2><br /><img src='"+img+"' /><br /><h3>"+actors+"</h3><div>"+'(IMDB Rating: ' +rating+')'+"</div>");
+            })
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
